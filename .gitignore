@@ -143,3 +143,4 @@ winemag-data-130k-v2.json
 # Data files
 *.csv
 *.json
+ knn_train_model.pkl
