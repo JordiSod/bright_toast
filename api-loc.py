@@ -30,7 +30,7 @@ def predict(descriptors: str,
              countries: str,
              provinces: str,
              regions: str,
-             variety: str,
+             varieties: str,
              wineries: str,
              min_price: int,
              max_price: int):
@@ -39,14 +39,15 @@ def predict(descriptors: str,
 
     descriptors = separator(descriptors)
     countries = separator(countries)
+    countries = [i.title() for i in countries]
     provinces = separator(provinces)
+    provinces = [i.title() for i in provinces]
     regions = separator(regions)
-
-#    regions = [i.title() for i in regions]
-    variety = separator(variety)
-#    variety= [i.title() for i in variety]
+    regions = [i.title() for i in regions]
+    varieties = separator(varieties)
+    varieties= [i.title() for i in varieties]
     wineries = separator(wineries)
-#    wineries= [i.title() for i in wineries]
+    wineries= [i.title() for i in wineries]
 
 
 
@@ -59,7 +60,7 @@ def predict(descriptors: str,
     # return {"suggestions": recommendations(descriptors)
 
     #return {"suggestions": rec2(descriptors,countries,provinces,regions,varieties, min_price, max_price)
-    return {"suggestions": rec2(descriptors,countries, provinces, regions, variety, min_price, max_price)
+    return {"suggestions": rec2(descriptors,countries, provinces, regions, min_price, max_price)
 
     #return {"suggestions": recapi(descriptors)
     }

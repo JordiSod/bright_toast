@@ -73,8 +73,8 @@ def local_load_files():
     return wine_word2vec_model, model_knn, dict_of_tfidf_weightings, wine_reviews_mincount
 
 if __name__ == '__main__':
-     load_word2vec_model()
-     load_knn_model()
-     load_tfidf_weights()
-     load_wine_reviews_mincount()
-    # local_load_files()
+    #  load_word2vec_model()
+    #  load_knn_model()
+    #  load_tfidf_weights()
+    #  load_wine_reviews_mincount()
+    local_load_files()
