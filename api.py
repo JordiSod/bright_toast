@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI
 import pandas as pd
-from recommender import recommendations,rec2,rec3
+from recommender import recommendations,rec2
 # In[ ]:
 
 app = FastAPI()
@@ -28,10 +28,6 @@ def index():
 # Define a predictor.
 def predict(descriptors: str,
              countries: str,
-             provinces: str,
-             regions: str,
-             variety: str,
-             wineries: str,
              min_price: int,
              max_price: int):
     print(descriptors)
@@ -39,16 +35,7 @@ def predict(descriptors: str,
 
     descriptors = separator(descriptors)
     countries = separator(countries)
-    provinces = separator(provinces)
-    regions = separator(regions)
-
-#    regions = [i.title() for i in regions]
-    variety = separator(variety)
-#    variety= [i.title() for i in variety]
-    wineries = separator(wineries)
-#    wineries= [i.title() for i in wineries]
-
-
+    countries = [i.title() for i in countries]
 
     print(descriptors)
     print(countries)
@@ -57,10 +44,7 @@ def predict(descriptors: str,
     #Do all the magic that needs to be done!
 
     # return {"suggestions": recommendations(descriptors)
-
-    #return {"suggestions": rec2(descriptors,countries,provinces,regions,varieties, min_price, max_price)
-    return {"suggestions": rec2(descriptors,countries, provinces, regions, variety, min_price, max_price)
-
+    return {"suggestions": rec2(descriptors,countries, min_price, max_price)
     #return {"suggestions": recapi(descriptors)
     }
 
