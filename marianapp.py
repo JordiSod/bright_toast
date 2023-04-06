@@ -2,13 +2,20 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import requests
+import string
 # from PIL import Image
 
+# A Streamlit app needs to start with a versionof this command.
 st.set_page_config(layout='wide')
-# We need to setup some cleaning stuff for a few inputs.
-import string
 
+#Define dictionaries
+
+# We need to setup some cleaning stuff for a few inputs.
 def basic_cleaning(sentence):
+    '''
+    Preprocess user input to send it to the api that houses the model.
+    '''
+
     sentence = sentence.lower()
     sentence = ''.join(char for char in sentence if not char.isdigit())
 
@@ -20,29 +27,9 @@ def basic_cleaning(sentence):
 
     return sentence
 
+# Define lists and dictinaries with wine info, in order to make the code clearer
 
-
-
-# And now on with the show.
-
-st.title(":sparkler: Welcome to Bright Toast! :sparkler:")
-st.text(" Bright Toast is a powerful machine learning model that given a description of your ideal wine gives you the perfect matches for your next wine tasting! ")
-#st.image('./header.png')
-
-
-element = st.empty()
-element = st.empty()
-clicked = st.button ("Click to find your Bright Toast... :sparkles:")
-#image = Image.open("C:\Users\mariana\OneDrive\Pictures\Saved Pictures\neon3.jpg")
-if "more_stuff" not in st.session_state:
-    st.session_state.more_stuff = False
-
-if clicked:
-    st.session_state.more_stuff = True
-
-if st.session_state.more_stuff:
-    st.markdown(":star2: These are optional parameters, don't worry if you don't know :) ")
-    variety =   st.multiselect('Select a variety', ['White Blend', 'Portuguese Red', 'Pinot Gris', 'Riesling',
+variety_list = ['White Blend', 'Portuguese Red', 'Pinot Gris', 'Riesling',
        'Pinot Noir', 'Tempranillo-Merlot', 'Frappato', 'Gewürztraminer',
        'Cabernet Sauvignon', 'Nerello Mascalese', 'Chardonnay', 'Malbec',
        'Tempranillo Blend', 'Meritage', 'Red Blend', 'Merlot',
@@ -235,16 +222,18 @@ if st.session_state.more_stuff:
        'Moscato di Noto', 'Roscetto', 'Torontel', 'Otskhanuri Sapere',
        'Viognier-Valdiguié', 'Trollinger', 'Tsapournakos', 'Francisa',
        'Kuntra', 'Pignolo', 'Caprettone', 'Ondenc', 'Athiri',
-       'Bobal-Cabernet Sauvignon'])
-    countries = st.multiselect('select a country', ['Italy', 'Portugal', 'US', 'Spain', 'France', 'Germany',
+       'Bobal-Cabernet Sauvignon']
+
+country_list = ['Italy', 'Portugal', 'US', 'Spain', 'France', 'Germany',
     'Argentina', 'Chile', 'Australia', 'Austria', 'South Africa',
     'New Zealand', 'Israel', 'Hungary', 'Greece', 'Romania', 'Mexico',
     'Canada', 'Turkey', 'Czech Republic', 'Slovenia', 'Croatia',
     'Georgia', 'Uruguay', 'England', 'Lebanon', 'Serbia', 'Brazil',
     'Moldova', 'Morocco', 'Peru', 'India', 'Bulgaria', 'Cyprus',
     'Armenia', 'Switzerland', 'Bosnia and Herzegovina', 'Slovakia',
-    'Macedonia', 'Ukraine', 'Luxembourg', 'China', 'Egypt'])
-    provinces = st.multiselect('Select a province', ['Sicily & Sardinia', 'Douro', 'Oregon', 'Michigan',
+    'Macedonia', 'Ukraine', 'Luxembourg', 'China', 'Egypt']
+
+province_list = ['Sicily & Sardinia', 'Douro', 'Oregon', 'Michigan',
        'Northern Spain', 'Alsace', 'Rheinhessen', 'California', 'Mosel',
        'Other', 'Mendoza Province', 'Virginia', 'Beaujolais',
        'Colchagua Valley', 'Southern Italy', 'Maule Valley', 'Bordeaux',
@@ -346,15 +335,49 @@ if st.session_state.more_stuff:
        'Letrinon', 'Muscat of Kefallonian', 'Thessalikos', 'Hawaii',
        'China', 'Limnos', 'Egypt', 'Viile Timis', 'Devon Valley', 'Krk',
        'Arcadia', 'Cape Agulhas', 'Kathikas', 'Vin de Pays de Velvendo',
-       'Landwein Rhein', 'Lesbos', 'Távora-Varosa', 'Neuchâtel'])
-    min_price = st.number_input('Minimum price')
-    max_price = st.number_input('Maximum price')
+       'Landwein Rhein', 'Lesbos', 'Távora-Varosa', 'Neuchâtel']
+
+
+# And now on with the show.
+
+st.title(":sparkler: Welcome to Bright Toast! :sparkler:")
+st.text(" Bright Toast is a powerful machine learning model that given a description of your ideal wine gives you the perfect matches for your next wine tasting! ")
+#st.image('./header.png')
+
+
+element = st.empty()
+element = st.empty()
+clicked = st.button ("Click to find your Bright Toast... :sparkles:")
+#image = Image.open("C:\Users\mariana\OneDrive\Pictures\Saved Pictures\neon3.jpg")
+if "more_stuff" not in st.session_state:
+    st.session_state.more_stuff = False
+
+if clicked:
+    st.session_state.more_stuff = True
+
+if st.session_state.more_stuff:
+    st.markdown(":star2: These are optional parameters, don't worry if you don't know :) ")
+    variety =   st.multiselect('Select a variety', variety_list)
+    countries = st.multiselect('select a country', country_list)
+    provinces = st.multiselect('Select a province', province_list)
+    # provinces = st.multiselect('Select a province', province_dict(countries))
+    min_price = st.number_input('Minimum price',min_value=1, max_value= 3000,value=1)
+    max_price = st.number_input('Maximum price', max_value=3500, value=3500)
+
+    #st.text(mingo)
+    price_range = st.slider(
+    'Or select a range of prices',
+    0, 3500, (min_price, max_price))
+    # st.write('Values:', values)
+    # st.write('Values:', values[0])
+    min_price = price_range[0]
+    max_price = price_range[1]
+
 #    wineries = st.multiselect('Select a winery',['Nicosia', 'Quinta dos Avidagos', 'Rainstorm','Mas de Pampelonne', 'Bodegas Eidosela', 'Penedo Borges'])
     st.markdown(":star2: However, the description is mandatory! ")
     descriptors  = st.text_input('Describe your ideal wine making sure to detail the look, smell, and taste.')
     st.markdown(":star2: Example of a correct wine description: Aromas include tropical fruit, broom, brimstone and dried herb. The palate isn't overly expressive, offering unripened apple, citrus and dried sage alongside brisk acidity.")
 
-    st.text(provinces)
     if provinces == []:
         provinces = 'all'
     else:
@@ -373,7 +396,8 @@ if st.session_state.more_stuff:
 
 
 #    url='https://bright-toast-api-cqu7vos7fq-vp.a.run.app/predict'
-    url='http://127.0.0.1:8000/predict'
+    url='https://bright-toast-api2-cqu7vos7fq-vp.a.run.app/predict'
+#    url='http://127.0.0.1:8000/predict'
 
 
     params ={'descriptors': basic_cleaning(descriptors),
@@ -389,28 +413,8 @@ if st.session_state.more_stuff:
     if descriptors:
         try:
             req = requests.get(url, params=params)
-            st.text(st.text(req.request.url))
+#            st.text(st.text(req.request.url))
             winerec = req.json()
             st.table(winerec['suggestions'])
         except:
             st.text('')
-
-
-
-
-## Let's call our API in order to retreive a prediction
-
-#url = 'x'
-   # if url == 'x'
-
-#params ={'descriptors'; descriptors,
-         #'countries'; countries
-         #'provinces';provinces,
-         # 'regions'; regions
-         # 'varieties; varieties
-         # 'wineries'; wineries
-         # 'min_price'; min price
-         # 'max_price'; max_price }
-
-#req = requests.get(url, params=params)
-# req.json()

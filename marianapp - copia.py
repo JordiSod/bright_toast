@@ -354,17 +354,33 @@ if st.session_state.more_stuff:
     descriptors  = st.text_input('Describe your ideal wine making sure to detail the look, smell, and taste.')
     st.markdown(":star2: Example of a correct wine description: Aromas include tropical fruit, broom, brimstone and dried herb. The palate isn't overly expressive, offering unripened apple, citrus and dried sage alongside brisk acidity.")
 
-    st.text(provinces)
-    if provinces == []: provinces = 'all'
+    if provinces == []:
+        provinces = 'all'
+    else:
+        provinces = '_'.join(provinces)
 
-    url='https://bright-toast-api-cqu7vos7fq-vp.a.run.app/predict'
+    if countries == []:
+        countries = 'all'
+    else:
+        countries = '_'.join(countries)
+
+    if variety == []:
+        variety = 'all'
+    else:
+        variety = '_'.join(variety)
+
+
+
+#    url='https://bright-toast-api-cqu7vos7fq-vp.a.run.app/predict'
+    url='https://bright-toast-api2-cqu7vos7fq-vp.a.run.app/predict'
+#    url='http://127.0.0.1:8000/predict'
+
 
     params ={'descriptors': basic_cleaning(descriptors),
-    #       'descriptors': 'sweet_tropical_pineapple_strawberry',
-            'countries': 'argentina_chile_france',
+            'countries': countries,
             'provinces': provinces,
             'regions': 'all',
-            'varieties': 'all',
+            'variety': variety,
             'wineries': 'all',
             'min_price': int(min_price),
             'max_price': int(max_price) }
@@ -373,27 +389,8 @@ if st.session_state.more_stuff:
     if descriptors:
         try:
             req = requests.get(url, params=params)
+#            st.text(st.text(req.request.url))
             winerec = req.json()
             st.table(winerec['suggestions'])
         except:
             st.text('')
-
-
-
-
-## Let's call our API in order to retreive a prediction
-
-#url = 'x'
-   # if url == 'x'
-
-#params ={'descriptors'; descriptors,
-         #'countries'; countries
-         #'provinces';provinces,
-         # 'regions'; regions
-         # 'varieties; varieties
-         # 'wineries'; wineries
-         # 'min_price'; min price
-         # 'max_price'; max_price }
-
-#req = requests.get(url, params=params)
-# req.json()
