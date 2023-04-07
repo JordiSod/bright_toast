@@ -337,84 +337,173 @@ province_list = ['Sicily & Sardinia', 'Douro', 'Oregon', 'Michigan',
        'Arcadia', 'Cape Agulhas', 'Kathikas', 'Vin de Pays de Velvendo',
        'Landwein Rhein', 'Lesbos', 'Távora-Varosa', 'Neuchâtel']
 
+provinces_dictionary = {'Portugal':['Douro', 'Alentejano', 'Alentejo', 'Beira Atlantico',
+       'Vinho Verde', 'Tejo', 'Lisboa', 'Península de Setúbal', 'Port',
+       'Dão', 'Bairrada', 'Ribatejano', 'Duriense', 'Beiras',
+       'Vinho Espumante', 'Terras do Dão', 'Beira Interior', 'Minho',
+       'Bucelas', 'Estremadura', 'Portuguese Table Wine', 'Setubal',
+       'Trás-os-Montes', 'Table wine', 'Moscatel de Setúbal', 'Ribatejo',
+       'Palmela', 'Alenquer', 'Obidos', 'Vinho Espumante de Qualidade',
+       'Madeira', 'Algarve', 'Terras do Sado', 'Vinho da Mesa',
+       'Portugal', 'Moscatel do Douro', 'Vinho Licoroso', 'Colares',
+       'Alenteo', 'Távora-Varosa'], 'US':['Oregon', 'Michigan', 'California', 'Virginia', 'Washington',
+       'New York', 'Idaho', 'Texas', 'Pennsylvania', 'America',
+       'New Jersey', 'Missouri', 'New Mexico', 'Nevada', 'Colorado',
+       'Arizona', 'Massachusetts', 'Ohio', 'Illinois',
+       'Washington-Oregon', 'North Carolina', 'Iowa', 'Vermont',
+       'Kentucky', 'Connecticut', 'Rhode Island', 'Hawaii'], 'Spain':['Northern Spain', 'Galicia', 'Central Spain', 'Catalonia',
+       'Levante', 'Andalucia', 'Spanish Islands', 'Spain Other'], 'Italy':['Sicily & Sardinia', 'Southern Italy', 'Central Italy', 'Tuscany',
+       'Piedmont', 'Northeastern Italy', 'Veneto', 'Italy Other',
+       'Lombardy', 'Northwestern Italy'], 'France':['Alsace', 'Beaujolais', 'Bordeaux', 'Champagne', 'France Other',
+       'Southwest France', 'Burgundy', 'Rhône Valley',
+       'Languedoc-Roussillon', 'Provence', 'Loire Valley'], 'Germany':['Rheinhessen', 'Mosel', 'Rheingau', 'Franken', 'Ahr', 'Nahe',
+       'Pfalz', 'Württemberg', 'Baden', 'Mosel-Saar-Ruwer', 'Germany',
+       'Mittelrhein', 'Landwein Rhein'], 'Argentina':['Other', 'Mendoza Province'], 'Chile':['Colchagua Valley', 'Maule Valley', 'Maipo Valley', 'Rapel Valley',
+       'Leyda Valley', 'Aconcagua Valley', 'Loncomilla Valley',
+       'Casablanca Valley', 'Curicó Valley', 'Limarí Valley',
+       'Colchagua Costa', 'Central Valley', 'Lontué Valley', 'Chile',
+       'Rio Claro', 'Cachapoal Valley', 'Aconcagua Costa',
+       'Bío Bío Valley', 'Peumo', 'Elqui Valley', 'Marchigue',
+       'Puente Alto', 'San Antonio', 'Itata Valley', 'Santa Cruz',
+       'Lolol Valley', 'Cauquenes Valley', 'Apalta', 'Malleco',
+       'Choapa Valley', 'Sagrada Familia', 'San Clemente', 'Buin',
+       'Maipo Valley-Colchagua Valley', 'Leyda Valley-Maipo Valley',
+       'Pirque', 'Molina', 'Curicó and Maipo Valleys',
+       'Curicó and Leyda Valleys', 'Casablanca-Curicó Valley', 'Coelemu',
+       'Requinoa', 'Casablanca & Leyda Valleys'], 'Australia':['South Australia', 'Victoria', 'Western Australia',
+       'Australia Other', 'Tasmania', 'New South Wales'], 'Austria':['Burgenland', 'Leithaberg', 'Kremstal', 'Weinviertel',
+       'Niederösterreich', 'Wagram', 'Kamptal', 'Steiermark',
+       'Südsteiermark', 'Südoststeiermark', 'Wiener Gemischter Satz',
+       'Wachau', 'Traisental', 'Thermenregion', 'Carnuntum',
+       'Weinland Österreich', 'Wagram-Donauland', 'Vienna',
+       'Neusiedlersee', 'Mittelburgenland', 'Eisenberg', 'Austria',
+       'Südburgenland'], 'South Africa':['Stellenbosch', 'Simonsberg-Stellenbosch', 'Western Cape',
+       'Coastal Region', 'Darling', 'Robertson', 'Swartland',
+       'Walker Bay', 'Paarl', 'Constantia', 'South Africa', 'Franschhoek',
+       'Elgin', 'Wellington', 'Simonsberg-Paarl', 'Overberg',
+       'Olifants River', 'Groenekloof', 'Lutzville Valley', 'Durbanville',
+       'Breedekloof', 'Cederberg', 'Philadelphia', 'Jonkershoek Valley',
+       'Eilandia', 'Tulbagh', 'Hemel en Aarde', 'Cape South Coast',
+       'Northern Cape', 'Breede River Valley', 'Elim', 'Vlootenburg',
+       'Polkadraai Hills', 'Bot River', 'Paardeberg', 'Helderberg',
+       'Cape Peninsula', 'Malgas', 'Devon Valley', 'Cape Agulhas'], 'New Zealand':['Marlborough', "Hawke's Bay", 'Martinborough', 'Central Otago',
+       'Awatere Valley', 'Canterbury', 'Wairau Valley', 'Kumeu', 'Nelson',
+       'Waipara Valley', 'South Island', 'Gisborne', 'Wairarapa',
+       'Waipara', 'New Zealand', 'Waitaki Valley', 'East Coast',
+       'Waiheke Island', 'Gladstone'], 'Israel':['Judean Hills', 'Galilee', 'Dan', 'Negev Hills', 'Upper Galilee',
+       'Ella Valley', 'Shomron', 'Samson', 'Galil', 'Israel',
+       'Haut-Judeé', 'Golan Heights', 'Negev', 'Jerusalem Hills'], 'Hungary':['Tokaj', 'Tokaji', 'Villány', 'Hungary', 'Eger', 'Mátra',
+       'Szekszárd', 'Sopron'], 'Greece':['Santorini', 'Crete', 'Corinth', 'Halkidiki', 'Epanomi', 'Nemea',
+       'Peloponnese', 'Drama', 'Pangeon', 'Mantinia', 'Chalkidiki',
+       'Rapsani', 'Pageon', 'Naoussa', 'Atalanti Valley', 'Macedonia',
+       'Samos', 'Patras', 'Korinthia', 'Greece', 'Florina',
+       'Mavrodaphne of Patras', 'Attica', 'Thraki', 'Monemvasia',
+       'Ismarikos', 'Sithonia', 'Agioritikos', 'Beotia', 'Retsina',
+       'Amindeo', 'Cephalonia', 'Cyclades', 'Achaia', 'Amyndeon',
+       'Central Greece', 'Mavrodaphne de Cephalonie', 'Goumenissa',
+       'Messinia', 'Lakonia', 'Markopoulo', 'Krania Olympus', 'Corinthia',
+       'Mount Athos', 'Sterea Ellada', 'Muscat of Patras', 'Imathia',
+       'Letrinon', 'Muscat of Kefallonian', 'Thessalikos', 'Limnos',
+       'Arcadia', 'Vin de Pays de Velvendo', 'Lesbos'], 'Romania':['Recas', 'Dealu Mare', 'Jidvei', 'Panciu', 'Romania', 'Tarnave',
+       'Viile Timisului', 'Sebes', 'Murfatlar', 'Dealurile Munteniei',
+       'Vânju Mare', 'Dealurile Hușilor', 'Viile Timis'], 'Mexico':['Valle de Guadalupe', 'San Vicente',
+       'San Antonio de las Minas Valley'], 'Canada':['Ontario', 'British Columbia', 'Canada Other'], 'Turkey':['Thrace', 'Aegean', 'Ankara', 'Elazığ-Diyarbakir', 'Turkey',
+       'Elazığ', 'Cappadocia', 'Urla-Thrace'], 'Czech Republic':['Moravia'],'Slovenia':['Slovenia', 'Primorska', 'Vipavska Dolina', 'Kras', 'Goriska Brda',
+       'Brda', 'Dolenjska', 'Slovenska Istra'], 'Luxembourg': ['Moselle Luxembourgeoise'], 'Croatia':['Istria', 'Peljesac', 'Korčula', 'Croatia', 'Podunavlje',
+       'Dalmatian Coast', 'Middle and South Dalmatia', 'Kutjevo',
+       'North Dalmatia', 'Hvar', 'Dingač', 'Hrvatsko Primorje', 'Krk'], 'Georgia':['Kakheti', 'Georgia'], 'Uruguay': ['Canelones', 'Uruguay', 'Atlantida', 'Juanico', 'Montevideo',
+       'San Jose', 'Progreso'], 'England':['England'], 'Lebanon':['Lebanon', 'Bekaa Valley'], 'Serbia':['Pocerina', 'Fruška Gora'], 'Brazil':['Pinto Bandeira', 'Santa Catarina', 'Serra Gaúcha',
+       'Vale dos Vinhedos', 'Brazil', 'Vale Trentino', 'Serra do Sudeste',
+       'Campanha'], 'Moldova':['Moldova', 'Cahul', 'Codru Region'], 'Morocco':['Zenata', 'Guerrouane', 'Morocco'], 'Peru': ['Ica'], 'India':['Nashik'], 'Bulgaria':['Thracian Valley', 'Danube River Plains', 'Black Sea Coastal',
+       'Bulgaria'], 'Cyprus':['Cyprus', 'Pitsilia Mountains', 'Pafos', 'Lemesos', 'Commandaria',
+       'Kathikas'], 'Armenia':['Armenia'], 'Switzerland':['Valais', 'Switzerland', 'Ticino', 'Neuchâtel'], 'Bosnia and Herzegovina':['Mostar'], 'Ukraine':['Ukraine'], 'Slovakia':['Muzla'], 'Macedonia':['Tikves'], 'China':['China']}
+
 
 # And now on with the show.
 
 st.title(":sparkler: Welcome to Bright Toast! :sparkler:")
-st.text(" Bright Toast is a powerful machine learning model that given a description of your ideal wine gives you the perfect matches for your next wine tasting! ")
+
+st.markdown(" Bright Toast is a your personal computerized sommelier. Give it a description of your ideal wine gives you the perfect matches for your next wine tasting! ")
 #st.image('./header.png')
 
 
 element = st.empty()
 element = st.empty()
-clicked = st.button ("Click to find your Bright Toast... :sparkles:")
 #image = Image.open("C:\Users\mariana\OneDrive\Pictures\Saved Pictures\neon3.jpg")
-if "more_stuff" not in st.session_state:
-    st.session_state.more_stuff = False
+st.sidebar.markdown(":star2: Please, tell us what you want to drink now! ")
 
-if clicked:
-    st.session_state.more_stuff = True
+descriptors = st.sidebar.text_input('Describe your ideal wine making sure to detail the look, smell, and taste.', key = 33)
+#st.sidebar.markdown(":star2: Example of a correct wine description: Aromas include tropical fruit, broom, brimstone and dried herb. The palate isn't overly expressive, offering unripened apple, citrus and dried sage alongside brisk acidity.")
+st.sidebar.markdown(":star2: Example: I want a superb wine with soft and velvety tannins and a unique character of dark fruits, black olives, dark chocolate, and earth. I want a Petrus. I can't afford a Petrus. Tell me what to do.")
 
-if st.session_state.more_stuff:
-    st.markdown(":star2: These are optional parameters, don't worry if you don't know :) ")
-    variety =   st.multiselect('Select a variety', variety_list)
-    countries = st.multiselect('select a country', country_list)
-    provinces = st.multiselect('Select a province', province_list)
-    # provinces = st.multiselect('Select a province', province_dict(countries))
-    min_price = st.number_input('Minimum price',min_value=1, max_value= 3000,value=1)
-    max_price = st.number_input('Maximum price', max_value=3500, value=3500)
+st.sidebar.markdown(":star2: These are optional parameters, don't worry if you don't know :) ")
+variety =   st.sidebar.multiselect('Select a variety', variety_list)
+countries = st.sidebar.multiselect('select a country',list(provinces_dictionary.keys()))
+#countries = st.sidebar.multiselect('select a country', country_list)
+#provinces = st.sidebar.multiselect('Select a province', province_list)
+if len(countries) > 0:
+    provinces_total = []
+    for c in range(len(countries)):
+        provinces_total = provinces_total + list(provinces_dictionary[countries[c]])
+    provinces = st.sidebar.multiselect('Select a province', provinces_total)
 
-    #st.text(mingo)
-    price_range = st.slider(
-    'Or select a range of prices',
-    0, 3500, (min_price, max_price))
-    # st.write('Values:', values)
-    # st.write('Values:', values[0])
-    min_price = price_range[0]
-    max_price = price_range[1]
+
+# provinces = st.multiselect('Select a province', province_dict(countries))
+min_price = st.sidebar.number_input('Minimum price',min_value=1, max_value= 3000,value=1)
+max_price = st.sidebar.number_input('Maximum price (sky is the limit)', max_value=3500, value=3500)
+
+
+#st.text(mingo)
+price_range = st.sidebar.slider(
+'Or select a range of prices',
+0, 3500, (min_price, max_price))
+# st.write('Values:', values)
+# st.write('Values:', values[0])
+min_price = price_range[0]
+max_price = price_range[1]
 
 #    wineries = st.multiselect('Select a winery',['Nicosia', 'Quinta dos Avidagos', 'Rainstorm','Mas de Pampelonne', 'Bodegas Eidosela', 'Penedo Borges'])
-    st.markdown(":star2: However, the description is mandatory! ")
-    descriptors  = st.text_input('Describe your ideal wine making sure to detail the look, smell, and taste.')
-    st.markdown(":star2: Example of a correct wine description: Aromas include tropical fruit, broom, brimstone and dried herb. The palate isn't overly expressive, offering unripened apple, citrus and dried sage alongside brisk acidity.")
+# st.markdown(":star2: However, the description is mandatory! ")
+# descriptors  = st.sidebar.text_input('Describe your ideal wine making sure to detail the look, smell, and taste.')
+# st.markdown(":star2: Example of a correct wine description: Aromas include tropical fruit, broom, brimstone and dried herb. The palate isn't overly expressive, offering unripened apple, citrus and dried sage alongside brisk acidity.")
 
-    if provinces == []:
-        provinces = 'all'
-    else:
-        provinces = '_'.join(provinces)
+if provinces == []:
+    provinces = 'all'
+else:
+    provinces = '_'.join(provinces)
 
-    if countries == []:
-        countries = 'all'
-    else:
-        countries = '_'.join(countries)
+if countries == []:
+    countries = 'all'
+else:
+    countries = '_'.join(countries)
 
-    if variety == []:
-        variety = 'all'
-    else:
-        variety = '_'.join(variety)
+if variety == []:
+    variety = 'all'
+else:
+    variety = '_'.join(variety)
 
 
 
 #    url='https://bright-toast-api-cqu7vos7fq-vp.a.run.app/predict'
-    url='https://bright-toast-api2-cqu7vos7fq-vp.a.run.app/predict'
+url='https://bright-toast-api2-cqu7vos7fq-vp.a.run.app/predict'
 #    url='http://127.0.0.1:8000/predict'
 
 
-    params ={'descriptors': basic_cleaning(descriptors),
-            'countries': countries,
-            'provinces': provinces,
-            'regions': 'all',
-            'variety': variety,
-            'wineries': 'all',
-            'min_price': int(min_price),
-            'max_price': int(max_price) }
+params ={'descriptors': basic_cleaning(descriptors),
+        'countries': countries,
+        'provinces': provinces,
+        'regions': 'all',
+        'variety': variety,
+        'wineries': 'all',
+        'min_price': int(min_price),
+        'max_price': int(max_price) }
 
 
-    if descriptors:
-        try:
-            req = requests.get(url, params=params)
+if descriptors:
+    try:
+        req = requests.get(url, params=params)
 #            st.text(st.text(req.request.url))
-            winerec = req.json()
-            st.table(winerec['suggestions'])
-        except:
-            st.text('')
+        winerec = req.json()
+        st.table(winerec['suggestions'])
+    except:
+        st.text('')
