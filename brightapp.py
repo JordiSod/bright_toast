@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import requests
 import string
+import json
 # from PIL import Image
 
 # A Streamlit app needs to start with a versionof this command.
@@ -423,32 +424,34 @@ provinces_dictionary = {'Portugal':['Douro', 'Alentejano', 'Alentejo', 'Beira At
 
 st.title(":sparkler: Welcome to Bright Toast! :sparkler:")
 
-st.markdown(" Bright Toast is a your personal computerized sommelier. Give it a description of your ideal wine gives you the perfect matches for your next wine tasting! ")
+st.markdown(" Bright Toast is your personal computerized sommelier. Describe your ideal wine and Bright Toast will provide you with stunning suggestions.")
 #st.image('./header.png')
 
 
 element = st.empty()
 element = st.empty()
 #image = Image.open("C:\Users\mariana\OneDrive\Pictures\Saved Pictures\neon3.jpg")
-st.sidebar.markdown(":star2: Please, tell us what you want to drink now! ")
+st.sidebar.markdown(":star2: Please, tell us what you want to drink! ")
 
 descriptors = st.sidebar.text_input('Describe your ideal wine making sure to detail the look, smell, and taste.', key = 33)
 #st.sidebar.markdown(":star2: Example of a correct wine description: Aromas include tropical fruit, broom, brimstone and dried herb. The palate isn't overly expressive, offering unripened apple, citrus and dried sage alongside brisk acidity.")
-st.sidebar.markdown(":star2: Example: I want a superb wine with soft and velvety tannins and a unique character of dark fruits, black olives, dark chocolate, and earth. I want a Petrus. I can't afford a Petrus. Tell me what to do.")
+st.sidebar.markdown(":star2: Example: I want a superb wine with soft and velvety tannins and a unique character of dark fruits, black olives, dark chocolate, earth and berries. I want a Petrus. I can't afford a Petrus. Tell me what to do.")
 
 st.sidebar.markdown(":star2: These are optional parameters, don't worry if you don't know :) ")
 variety =   st.sidebar.multiselect('Select a variety', variety_list)
 countries = st.sidebar.multiselect('select a country',list(provinces_dictionary.keys()))
 #countries = st.sidebar.multiselect('select a country', country_list)
 #provinces = st.sidebar.multiselect('Select a province', province_list)
+
 if len(countries) > 0:
     provinces_total = []
     for c in range(len(countries)):
         provinces_total = provinces_total + list(provinces_dictionary[countries[c]])
     provinces = st.sidebar.multiselect('Select a province', provinces_total)
+else:
+    provinces = st.sidebar.multiselect('Select a province', province_list)
 
 
-# provinces = st.multiselect('Select a province', province_dict(countries))
 min_price = st.sidebar.number_input('Minimum price',min_value=1, max_value= 3000,value=1)
 max_price = st.sidebar.number_input('Maximum price (sky is the limit)', max_value=3500, value=3500)
 
@@ -461,11 +464,6 @@ price_range = st.sidebar.slider(
 # st.write('Values:', values[0])
 min_price = price_range[0]
 max_price = price_range[1]
-
-#    wineries = st.multiselect('Select a winery',['Nicosia', 'Quinta dos Avidagos', 'Rainstorm','Mas de Pampelonne', 'Bodegas Eidosela', 'Penedo Borges'])
-# st.markdown(":star2: However, the description is mandatory! ")
-# descriptors  = st.sidebar.text_input('Describe your ideal wine making sure to detail the look, smell, and taste.')
-# st.markdown(":star2: Example of a correct wine description: Aromas include tropical fruit, broom, brimstone and dried herb. The palate isn't overly expressive, offering unripened apple, citrus and dried sage alongside brisk acidity.")
 
 if provinces == []:
     provinces = 'all'
@@ -502,8 +500,66 @@ params ={'descriptors': basic_cleaning(descriptors),
 if descriptors:
     try:
         req = requests.get(url, params=params)
-#            st.text(st.text(req.request.url))
+#        st.text(st.text(req.request.url))
         winerec = req.json()
-        st.table(winerec['suggestions'])
+#        st.table(winerec['suggestions'])
+        contenido = winerec
+        title = []
+        variety = []
+        winery = []
+        country = []
+        province = []
+        region = []
+        points = []
+        price = []
+        wine_descriptors = []
+        wine = len(contenido['suggestions'])
+        for w in range(wine):
+            ws = str(w+1)
+            title.append(contenido['suggestions'][ws]['title'])
+            variety.append(contenido['suggestions'][ws]['variety'])
+            winery.append(contenido['suggestions'][ws]['winery'])
+            country.append(contenido['suggestions'][ws]['country'])
+            province.append(contenido['suggestions'][ws]['province'])
+            region.append(contenido['suggestions'][ws]['region_1'])
+            points.append(contenido['suggestions'][ws]['points'])
+            price.append(contenido['suggestions'][ws]['price'])
+            wine_descriptors.append(contenido['suggestions'][ws]['wine_descriptors'])
+
+        # Convertimos la lista en una cadena de caracteres
+        clear_wd=[]
+        for wd in wine_descriptors:
+            clear_wd.append(' '.join(wd))
+        datos = {'Title': title,
+                'variety': variety,
+                'winery': winery,
+                'country':country,
+                'province':province,
+                'region':region,
+                'points':points,
+                'price':price,
+                'wine_descriptors':clear_wd}
+        sirve = pd.DataFrame(datos)
+        sirve.drop_duplicates(inplace=True)
+        # sirve.reset_index(inplace=True)
+        #sirve.drop(['index'], axis=1,inplace=True)
+        sirve = sirve.set_index('Title')
+
+        for w in range(len(sirve)):
+            fila = sirve.iloc[w]
+            if w == 0:
+                st.markdown(':wine_glass: Try this wonderful wine first!')
+        #        st.text(fila.to_frame().T)
+        #        st.text(fila[0])
+                st.table(fila.T)
+            else:
+                st.markdown(':wine_glass: Or this!')
+        #        st.text(fila.to_frame().T)
+        #        st.text(fila[0])
+                st.table(fila.T)
+
+        st.markdown(':star2: Still thirsty? Tell us what else you want to try!')
+
+
     except:
         st.text('')
